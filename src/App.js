@@ -28,6 +28,7 @@ class App extends Component {
   
       sessionStorage.setItem("token", accessToken);
       this.state = {
+        nice: [],
           token: accessToken
       }
     }
@@ -44,15 +45,18 @@ class App extends Component {
 handleSelected(selectedPage) {
   console.log("selected", selectedPage);
   this.setState({ selectedPage: selectedPage });
+
 }
- 
+
+
   render() {
     
     return (
       <>
-      <div className="App justify-content-center d-flex">
-       <PaginationComponent totalItems={50} pageSize={5} onSelect={this.handleSelected} />
-       </div>
+     
+     <div className="App justify-content-center d-flex">
+     <PaginationComponent totalItems={50} pageSize={5} onSelect={this.handleSelected} />
+     </div>
       </>
     );
   }
