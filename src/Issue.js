@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Col, Row, Media } from "reactstrap";
+import { Media } from "reactstrap";
 import "./Issue.css";
 import moment from "moment";
 
