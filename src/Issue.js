@@ -10,14 +10,20 @@ export default class Issue extends Component {
       <div>
         {this.props.issueList.map(issue => (
           <Media>
-            <Media body className="col-10 ">
-              <Media heading className="d-flex justify-content-start">
+            <Media body className="mb-3">
+              <Media heading className="d-flex justify-content-start mb-0 ml-4">
                 <div href="#">
                   <a href={issue.html_url}>#</a> {issue.number} {issue.title}
                 </div>
-                <div>moment().startOf("day").fromNow()</div>
               </Media>
-              <p className="d-flex justify-content-start">{issue.body}</p>
+              <Media>
+                <div className="small ml-5 mt-0 text-dark">
+                  {moment()
+                    .startOf("day")
+                    .fromNow()}
+                </div>
+              </Media>
+              <div className="row ml-5 text-left">{issue.body}</div>
             </Media>
             <Media left href="#" className="col-2">
               <img
@@ -25,7 +31,6 @@ export default class Issue extends Component {
                 src={issue.user.avatar_url}
                 width="60"
                 height="60"
-                // alt="@lvltcode"
               />
               <p className="small text-dark">@{issue.user.login}</p>
             </Media>
