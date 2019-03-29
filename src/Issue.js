@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Button, Col, Row, Media } from "reactstrap";
 import "./Issue.css";
 import moment from "moment";
+import ReactMarkdown from "react-markdown";
+//import SyntaxHighlighter from "react-syntax-highlighter";
+
 
 export default class Issue extends Component {
   render() {
@@ -9,16 +12,18 @@ export default class Issue extends Component {
     return (
       <div>
         {this.props.issueList.map(issue => (
-          <Media>
+          <Media className="container">
             <Media body className="col-10 ">
               <Media heading className="d-flex justify-content-start">
                 <div href="#">
                   <a href={issue.html_url}>#</a> {issue.number} {issue.title}
                 </div>
-                <div>moment().startOf("day").fromNow()</div>
+                {/* <div>moment().startOf("day").fromNow()</div> */}
               </Media>
-              <p className="d-flex justify-content-start">{issue.body}</p>
+              <ReactMarkdown source={issue.body} />
+              {/* <p className="d-flex justify-content-start">{issue.body}</p> */}
             </Media>
+           
             <Media left href="#" className="col-2">
               <img
                 class="from-avatar"

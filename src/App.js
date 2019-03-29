@@ -73,7 +73,7 @@ async getIssues() {
 
   async componentDidMount() {
     const url =
-      "https://api.github.com/repos/HasanArmstrong/github-issues/issues";
+      "https://api.github.com/repos/facebook/react/issues";
     let resp = await fetch(url);
     let json = await resp.json();
     this.setState({
