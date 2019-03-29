@@ -73,7 +73,7 @@ handleSearch(owner, repo) {
 
 async getIsusses(arg){
   const url =
-  `https://api.github.com/repos/AdeleD//react-paginate/issues?page=${arg}&per_page=10`
+  `https://api.github.com/repos/AdeleD/react-paginate/issues?page=${arg}&per_page=10`
   console.log(this.state.issues)
 let resp = await fetch(url);
 let json = await resp.json();
