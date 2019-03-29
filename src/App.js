@@ -1,8 +1,12 @@
 
 import React, { Component } from 'react';
 import './App.css';
-import SearchContainer from './SearchContainer';
+import ReactDOM from "react-dom";
+import PaginationComponent from "react-reactstrap-pagination";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Issue from "./Issue";
+import SearchContainer from './SearchContainer';
+
 
 const clientId = process.env.REACT_APP_CLIENT_ID;
 
@@ -10,32 +14,36 @@ class App extends Component {
   constructor() {
     super();
     const state = {};
-    const existingToken = sessionStorage.getItem("token");
-    const accessToken =
-      window.location.search.split("=")[0] === "?access_token"
-        ? window.location.search.split("=")[1]
-        : null;
+    this.state = {
+      selectedPage: 1
+    };
+  
+    this.handleSelected = this.handleSelected.bind(this);
+  
 
+    const existingToken = sessionStorage.getItem('token');
+    const accessToken = (window.location.search.split("=")[0] === "?access_token") ? window.location.search.split("=")[1] : null;
     if (!accessToken && !existingToken) {
-      window.location.replace(
-        `https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}`
-      );
+      window.location.replace(`https://github.com/login/oauth/authorize?scope=user:email,repo&client_id=${clientId}`)
     }
-
+  
     if (accessToken) {
       console.log(`New accessToken: ${accessToken}`);
-
+  
       sessionStorage.setItem("token", accessToken);
-      state.token = accessToken;
       this.state = {
-        token: accessToken
-      };
+          token: accessToken
+      }
     }
-
+  
     if (existingToken) {
-      state.token = existingToken;
-    }
-    this.state = {
+      this.state = {
+        token: existingToken
+      };
+    }    
+  }
+
+  this.state = {
       issues: [],
       token: state.token
     };
@@ -62,14 +70,21 @@ handleSearch(owner, repo) {
   }
 
 
+handleSelected(selectedPage) {
+  console.log("selected", selectedPage);
+  this.setState({ selectedPage: selectedPage });
+}
+ 
   render() {
+    
     return (
-      <div className="App">
+      <div className="App justify-content-center d-flex">
+      <div>
+       <PaginationComponent totalItems={50} pageSize={5} onSelect={this.handleSelected} />
+       <SearchContainer handleSearch={(owner, repo) => this.handleSearch(owner, repo)}/>
+       <Issue issueList={this.state.issues} />
 
-        <SearchContainer handleSearch={(owner, repo) => this.handleSearch(owner, repo)}/>
-
-        <Issue issueList={this.state.issues} />
-
+       </div>
       </div>
     );
   }
