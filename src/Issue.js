@@ -1,39 +1,33 @@
 import React, { Component } from "react";
 import { Button, Col, Row, Media } from "reactstrap";
 import "./Issue.css";
+import moment from "moment";
 
 export default class Issue extends Component {
-  constructor() {
-    super();
-    this.state = {
-      issues: []
-    };
-  }
-  async componentDidMount() {
-    const url =
-      "https://api.github.com/repos/HasanArmstrong/github-issues/issues";
-    let resp = await fetch(url);
-    let json = await resp.json();
-    this.setState({
-      issues: json
-    });
-  }
   render() {
-    // console.log(issues);
+    console.log(this.props.issueList);
     return (
       <div>
-        {this.state.issues.map(issue => (
+        {this.props.issueList.map(issue => (
           <Media>
             <Media body className="col-10 ">
               <Media heading className="d-flex justify-content-start">
                 <div href="#">
-                  <a href="#">#</a> {issue.number} {issue.title}
+                  <a href={issue.html_url}>#</a> {issue.number} {issue.title}
                 </div>
+                <div>moment().startOf("day").fromNow()</div>
               </Media>
               <p className="d-flex justify-content-start">{issue.body}</p>
             </Media>
             <Media left href="#" className="col-2">
-              <Media object data-src={issue.user["avatar_url"]} />
+              <img
+                class="from-avatar"
+                src={issue.user.avatar_url}
+                width="60"
+                height="60"
+                // alt="@lvltcode"
+              />
+              <p className="small text-dark">@{issue.user.login}</p>
             </Media>
           </Media>
         ))}

@@ -33,14 +33,25 @@ class App extends Component {
       state.token = existingToken;
     }
     this.state = {
+      issues: [],
       token: state.token
     };
+  }
+
+  async componentDidMount() {
+    const url =
+      "https://api.github.com/repos/HasanArmstrong/github-issues/issues";
+    let resp = await fetch(url);
+    let json = await resp.json();
+    this.setState({
+      issues: json
+    });
   }
 
   render() {
     return (
       <div className="App">
-        <Issue />
+        <Issue issueList={this.state.issues} />
       </div>
     );
   }
