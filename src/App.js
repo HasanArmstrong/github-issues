@@ -1,15 +1,18 @@
+
 import React, { Component } from 'react';
 import './App.css';
 import ReactDOM from "react-dom";
 import PaginationComponent from "react-reactstrap-pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Issue from "./Issue";
 
 
 const clientId = process.env.REACT_APP_CLIENT_ID;
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+    const state = {};
     this.state = {
       selectedPage: 1
     };
@@ -39,7 +42,21 @@ class App extends Component {
     }    
   }
 
-  
+  this.state = {
+      issues: [],
+      token: state.token
+    };
+  }
+
+  async componentDidMount() {
+    const url =
+      "https://api.github.com/repos/HasanArmstrong/github-issues/issues";
+    let resp = await fetch(url);
+    let json = await resp.json();
+    this.setState({
+      issues: json
+    });
+  }
 
 handleSelected(selectedPage) {
   console.log("selected", selectedPage);
@@ -49,11 +66,14 @@ handleSelected(selectedPage) {
   render() {
     
     return (
-      <>
       <div className="App justify-content-center d-flex">
+      <div>
        <PaginationComponent totalItems={50} pageSize={5} onSelect={this.handleSelected} />
        </div>
-      </>
+      <div>
+        <Issue issueList={this.state.issues} />
+      </div>
+      </div>
     );
   }
 }
