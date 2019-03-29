@@ -52,11 +52,11 @@ class App extends Component {
 
 
 
-// handleSearch(owner, repo) {
-//   //use for searchContainer,ex: update 'facebook/react' to state.value
-//   console.log(owner, repo)
-//   this.setState({value: `${owner}/${repo}`}, () => console.log(this.state))
-// }
+handleSearch(owner, repo) {
+  //use for searchContainer,ex: update 'facebook/react' to state.value
+  console.log(owner, repo)
+  this.setState({value: `${owner}/${repo}`}, () => console.log(this.state))
+}
 
 
   async componentDidMount() {
