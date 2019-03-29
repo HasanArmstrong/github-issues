@@ -1,6 +1,9 @@
-import React, { Component } from "react";
+
+import React, { Component } from 'react';
+import './App.css';
+import SearchContainer from './SearchContainer';
 import Issue from "./Issue";
-import "./App.css";
+
 const clientId = process.env.REACT_APP_CLIENT_ID;
 
 class App extends Component {
@@ -36,7 +39,17 @@ class App extends Component {
       issues: [],
       token: state.token
     };
-  }
+  }    
+}
+
+
+
+handleSearch(owner, repo) {
+  //use for searchContainer,ex: update 'facebook/react' to state.value
+  console.log(owner, repo)
+  this.setState({value: `${owner}/${repo}`}, () => console.log(this.state))
+}
+
 
   async componentDidMount() {
     const url =
@@ -48,10 +61,15 @@ class App extends Component {
     });
   }
 
+
   render() {
     return (
       <div className="App">
+
+        <SearchContainer handleSearch={(owner, repo) => this.handleSearch(owner, repo)}/>
+
         <Issue issueList={this.state.issues} />
+
       </div>
     );
   }
