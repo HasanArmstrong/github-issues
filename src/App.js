@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import SearchContainer from './SearchContainer';
 const clientId = process.env.REACT_APP_CLIENT_ID;
 
 class App extends Component {
@@ -29,23 +29,19 @@ constructor() {
     };
   }    
 }
+
+
+
+handleSearch(owner, repo) {
+  //use for searchContainer,ex: update 'facebook/react' to state.value
+  console.log(owner, repo)
+  this.setState({value: `${owner}/${repo}`}, () => console.log(this.state))
+}
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <SearchContainer handleSearch={(owner, repo) => this.handleSearch(owner, repo)}/>
       </div>
     );
   }
