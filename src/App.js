@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Issue from "./Issue";
 import ReactDOM from "react-dom";
 import PaginationComponent from "react-reactstrap-pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -55,7 +56,8 @@ handleSelected(selectedPage) {
       <>
      
      <div className="App justify-content-center d-flex">
-     <PaginationComponent totalItems={50} pageSize={5} onSelect={this.handleSelected} />
+     <PaginationComponent totalItems={10} pageSize={10} onSelect={this.handleSelected} />
+     <Issue />
      </div>
       </>
     );
