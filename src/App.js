@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import PaginationComponent from "react-reactstrap-pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Issue from "./Issue";
+import SearchContainer from './SearchContainer';
 
 
 const clientId = process.env.REACT_APP_CLIENT_ID;
@@ -46,7 +47,17 @@ class App extends Component {
       issues: [],
       token: state.token
     };
-  }
+  }    
+}
+
+
+
+handleSearch(owner, repo) {
+  //use for searchContainer,ex: update 'facebook/react' to state.value
+  console.log(owner, repo)
+  this.setState({value: `${owner}/${repo}`}, () => console.log(this.state))
+}
+
 
   async componentDidMount() {
     const url =
@@ -57,6 +68,7 @@ class App extends Component {
       issues: json
     });
   }
+
 
 handleSelected(selectedPage) {
   console.log("selected", selectedPage);
@@ -69,10 +81,10 @@ handleSelected(selectedPage) {
       <div className="App justify-content-center d-flex">
       <div>
        <PaginationComponent totalItems={50} pageSize={5} onSelect={this.handleSelected} />
+       <SearchContainer handleSearch={(owner, repo) => this.handleSearch(owner, repo)}/>
+       <Issue issueList={this.state.issues} />
+
        </div>
-      <div>
-        <Issue issueList={this.state.issues} />
-      </div>
       </div>
     );
   }
