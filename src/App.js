@@ -15,7 +15,8 @@ class App extends Component {
     super();
     const state = {};
     this.state = {
-      selectedPage: 1
+      selectedPage: 1,
+
     };
   
     this.handleSelected = this.handleSelected.bind(this);
@@ -41,13 +42,13 @@ class App extends Component {
         token: existingToken
       };
     }    
-  }
+  
 
   this.state = {
       issues: [],
       token: state.token
     };
-  }    
+  
 }
 
 
@@ -61,33 +62,51 @@ handleSearch(owner, repo) {
 
   async componentDidMount() {
     const url =
-      "https://api.github.com/repos/HasanArmstrong/github-issues/issues";
+      "https://api.github.com/repos/AdeleD/react-paginate/issues?page=1&per_page=10"
+      console.log(this.state.issues)
     let resp = await fetch(url);
     let json = await resp.json();
     this.setState({
       issues: json
     });
+    
   }
 
+async getIsusses(arg){
+  const url =
+  `https://api.github.com/repos/AdeleD/react-paginate/issues?page=${arg}&per_page=10`
+  console.log(this.state.issues)
+let resp = await fetch(url);
+let json = await resp.json();
+this.setState({
+  issues: json
+});
+}
 
 handleSelected(selectedPage) {
   console.log("selected", selectedPage);
   this.setState({ selectedPage: selectedPage });
+  this.getIsusses(selectedPage)
 }
- 
+
   render() {
     
     return (
-      <div className="App justify-content-center d-flex">
-      <div>
-       <PaginationComponent totalItems={50} pageSize={5} onSelect={this.handleSelected} />
-       <SearchContainer handleSearch={(owner, repo) => this.handleSearch(owner, repo)}/>
-       <Issue issueList={this.state.issues} />
-
+      <div className="App ">
+      <div className="justify-content-center">
+      <div className="d-flex justify-content-center">
+       <PaginationComponent totalItems={10} pageSize={2} onSelect={this.handleSelected} />
        </div>
+       <div className="d-flex justify-content-center">
+       <SearchContainer handleSearch={(owner, repo) => this.handleSearch(owner, repo)}/>
+       </div>
+       <Issue issueList={this.state.issues} />
+       </div>
+
       </div>
     );
   }
 }
+
 
 export default App;
