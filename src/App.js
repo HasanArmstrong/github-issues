@@ -51,13 +51,27 @@ class App extends Component {
 }
 
 
-
-handleSearch(owner, repo) {
+ handleSearch(owner, repo) {
   //use for searchContainer,ex: update 'facebook/react' to state.value
   console.log(owner, repo)
-  this.setState({value: `${owner}/${repo}`}, () => console.log(this.state))
+  this.setState({value: `${owner}/${repo}`}, () => this.getIssues())
+  
 }
 
+async getIssues() {
+  try{
+    const url =
+    `https://api.github.com/repos/${this.state.value}/issues?page=${arg}&per_page=10`;
+    let resp = await fetch(url);
+    let json = await resp.json();
+    json.message ? 
+    this.setState({issues: null, message: json.message}) :
+    this.setState({ issues: json })
+  } catch(err) {
+    console.log(err)
+  }
+ 
+}
 
   async componentDidMount() {
     const url =
@@ -67,20 +81,19 @@ handleSearch(owner, repo) {
     let json = await resp.json();
     this.setState({
       issues: json
-    });
-    
+    });   
   }
 
-async getIsusses(arg){
-  const url =
-  `https://api.github.com/repos/AdeleD/react-paginate/issues?page=${arg}&per_page=10`
-  console.log(this.state.issues)
-let resp = await fetch(url);
-let json = await resp.json();
-this.setState({
-  issues: json
-});
-}
+// async getIsusses(arg){
+//   const url =
+//   `https://api.github.com/repos/AdeleD/react-paginate/issues?page=${arg}&per_page=10`
+//   console.log(this.state.issues)
+// let resp = await fetch(url);
+// let json = await resp.json();
+// this.setState({
+//   issues: json
+// });
+// }
 
 handleSelected(selectedPage) {
   console.log("selected", selectedPage);
@@ -98,10 +111,12 @@ handleSelected(selectedPage) {
        </div>
        <div className="d-flex justify-content-center">
        <SearchContainer handleSearch={(owner, repo) => this.handleSearch(owner, repo)}/>
+       {this.state.issues ?
+        <Issue issueList={this.state.issues} /> :
+        <h2 className="m-5">{this.state.message}</h2>
+         }
        </div>
-       <Issue issueList={this.state.issues} />
-       </div>
-
+      </div>
       </div>
     );
   }
