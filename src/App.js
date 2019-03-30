@@ -5,6 +5,7 @@ import PaginationComponent from "react-reactstrap-pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Issue from "./Issue";
 import SearchContainer from './SearchContainer';
+import AddIssue from './AddIssue';
 
 
 const clientId = process.env.REACT_APP_CLIENT_ID;
@@ -12,7 +13,7 @@ const clientId = process.env.REACT_APP_CLIENT_ID;
 class App extends Component {
   constructor() {
     super();
-    const state = {};
+    
     this.state = {
       selectedPage: 1,
 
@@ -42,12 +43,7 @@ class App extends Component {
       };
     }    
   
-
-  this.state = {
-      issues: [],
-      token: state.token
-    };
-  
+  console.log('state', this.state)
 }
 
 
@@ -74,7 +70,7 @@ async getIssues(arg) {
 
   async componentDidMount() {
     const url =
-      "https://api.github.com/repos/AdeleD/react-paginate/issues?page=1&per_page=10"
+      "https://api.github.com/repos/HasanArmstrong/github-issues/issues?page=1&per_page=10"
       console.log(this.state.issues)
     let resp = await fetch(url);
     let json = await resp.json();
@@ -100,23 +96,29 @@ handleSelected(selectedPage) {
   this.getIssues(selectedPage)
 }
 
+
   render() {
     console.log('state', this.state)
+    const {value, issues} = this.state
     return (
-      <div className="App ">
-      <div className="justify-content-center">
+      <div className="App container">
       <div className="d-flex justify-content-center">
        <PaginationComponent totalItems={10} pageSize={2} onSelect={this.handleSelected} />
        </div>
        <div className="d-flex justify-content-center">
        <SearchContainer handleSearch={(owner, repo) => this.handleSearch(owner, repo)}/>
+       </div>
+       <div className="addIssue my-3">
+        {/* <a href="#" className="title">{value ? this.state.value : 'AdeleD/react-paginate'}</a> */}
+        <AddIssue onSubmit={() => this.getIssues(1)} AppState={this.state}/>
+       </div>
        {this.state.issues ?
+
         <Issue issueList={this.state.issues} /> :
         <h2 className="m-5">{this.state.message}</h2>
          }
        </div>
-      </div>
-      </div>
+   
     );
   }
 }

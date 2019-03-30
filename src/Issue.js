@@ -3,7 +3,7 @@ import { Button, Col, Row, Media } from "reactstrap";
 import "./Issue.css";
 import moment from "moment";
 
-export default class Issue extends Component {
+export default class Issue extends React.Component {
   render() {
     console.log(this.props.issueList);
     return (
@@ -28,6 +28,9 @@ export default class Issue extends Component {
                 // alt="@lvltcode"
               />
               <p className="small text-dark">@{issue.user.login}</p>
+              {/* {(issue.labels.length > 0) ? <div className="badge badge-info" style={{background: `#${issue.labels[0].color}`}}>name</div>:
+              <div></div>} */}
+              
             </Media>
           </Media>
         ))}
