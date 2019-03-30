@@ -1,0 +1,11 @@
+.Is {
+  background-color: white;
+}
+
+.Is :hover {
+  background-color: #f6f8fa;
+}
+
+.openColor {
+  color: #88cd99;
+}
