@@ -54,11 +54,10 @@ class App extends Component {
  handleSearch(owner, repo) {
   //use for searchContainer,ex: update 'facebook/react' to state.value
   console.log(owner, repo)
-  this.setState({value: `${owner}/${repo}`}, () => this.getIssues())
-  
+  this.setState({value: `${owner}/${repo}`}, () => this.getIssues(1))
 }
 
-async getIssues() {
+async getIssues(arg) {
   try{
     const url =
     `https://api.github.com/repos/${this.state.value}/issues?page=${arg}&per_page=10`;
@@ -97,12 +96,12 @@ async getIssues() {
 
 handleSelected(selectedPage) {
   console.log("selected", selectedPage);
-  this.setState({ selectedPage: selectedPage });
-  this.getIsusses(selectedPage)
+  // this.setState({ selectedPage: selectedPage });
+  this.getIssues(selectedPage)
 }
 
   render() {
-    
+    console.log('state', this.state)
     return (
       <div className="App ">
       <div className="justify-content-center">
