@@ -3,7 +3,10 @@ import { Media } from "reactstrap";
 import "./Issue.css";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faExclamationCircle,
+  faCheckCircle
+} from "@fortawesome/free-solid-svg-icons";
 
 const ReactMarkdown = require("react-markdown");
 
@@ -42,18 +45,35 @@ export default class Issue extends Component {
             </Navbar> */}
 
             <Media className="mx-2 py-2">
-              <Media className="col-1 openColor d-flex justify-content-end small pt-1">
-                <div className="mr-1">
-                  <FontAwesomeIcon icon={faExclamationCircle} />
+              {issue.state === "open" ? (
+                <div>
+                  <Media className="d-flex justify-content-end small pt-1 text-success ml-5">
+                    <div className="mr-1">
+                      <FontAwesomeIcon icon={faExclamationCircle} />
+                    </div>
+
+                    <div>{issue.state}</div>
+                  </Media>
                 </div>
-                <div>{issue.state}</div>
-              </Media>
-              <Media body className="mb-3">
-                <Media heading className="d-flex justify-content-start mb-0">
+              ) : (
+                <div>
+                  <Media className="d-flex justify-content-end small pt-1 text-danger ml-5">
+                    <div className="mr-1">
+                      <FontAwesomeIcon icon={faCheckCircle} />
+                    </div>
+                    <div>{issue.state}</div>
+                  </Media>
+                </div>
+              )}
+              <Media body className="mb-3 col-8-md">
+                <Media
+                  heading
+                  className="d-flex justify-content-start mb-0 ml-1 bodyContent col-md-10"
+                >
                   <div href="#">{issue.title}</div>
                 </Media>
                 <Media>
-                  <div className="small my-0 text-dark px-1">
+                  <div className="small my-0 text-dark px-1 ml-3">
                     <p>
                       <a href={issue.html_url}># </a>
                       {issue.number} opened on{" "}
@@ -63,10 +83,9 @@ export default class Issue extends Component {
                     </p>
                   </div>
                 </Media>
-                <ReactMarkdown
-                  source={issue.body}
-                  className="row ml-2 text-left pl-1 mr-1"
-                />
+                <div className="ml-3 text-left pl-1 mr-1 bodyContent col-md-10">
+                  <ReactMarkdown source={issue.body} />
+                </div>
               </Media>
               <Media left className="col-2 my-2">
                 <p>
