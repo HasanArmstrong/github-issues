@@ -96,16 +96,18 @@ export default class Issue extends React.Component {
                 {issue.labels.length === 0 ? (
                   <span />
                 ) : (
-                  <a className="label mt-0 mb-3" href={issue.labels[0].url}>
+                  issue.labels.map( label => 
+                    <a className="label mt-0 mb-3" href={label.url}>
                     <span
                       className="p-1"
                       style={{
-                        backgroundColor: "#" + issue.labels[0].color
+                        backgroundColor: "#" + label.color
                       }}
                     >
-                      {issue.labels[0].name}
+                      {label.name}
                     </span>
                   </a>
+                  )
                 )}
               </Media>
             </Media>
