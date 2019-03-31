@@ -12,11 +12,6 @@ class App extends Component {
   constructor() {
     super();
 
-    this.state = {
-      selectedPage: 1
-    };
-
-    this.handleSelected = this.handleSelected.bind(this);
 
     const existingToken = sessionStorage.getItem("token");
     const accessToken =
@@ -53,8 +48,9 @@ class App extends Component {
     );
   }
 
-  async getIssues(arg) {
+  async getIssues(arg, totalItems) {
     try {
+      
       const url = `https://api.github.com/repos/${
         this.state.value
       }/issues?state=all&page=${arg}&per_page=10&access_token=${
@@ -62,9 +58,12 @@ class App extends Component {
       }`;
       let resp = await fetch(url);
       let json = await resp.json();
-      json.message
-        ? this.setState({ issues: null, message: json.message })
-        : this.setState({ issues: json, totalItems: json[0].number }, () => console.log(this.state));
+      if(arg === 1) {
+        totalItems = json[0].number
+      }
+      json.message ?
+         this.setState({ issues: null, message: json.message })
+        : this.setState({ issues: json, totalItems : totalItems }, () => console.log(this.state));
     } catch (err) {
       console.log(err);
     }
@@ -87,7 +86,7 @@ class App extends Component {
   handleSelected(selectedPage) {
     //for the pagination
     this.setState({ selectedPage: selectedPage }, () =>
-      this.getIssues(selectedPage)
+      this.getIssues(selectedPage, this.state.totalItems)
     );
   }
 
@@ -104,7 +103,7 @@ class App extends Component {
           <PaginationComponent
             totalItems={this.state.totalItems}
             pageSize={10}
-            onSelect={this.handleSelected}
+            onSelect={(e) => this.handleSelected(e)}
             activePage={this.state.activePage}
           />
         </div>
