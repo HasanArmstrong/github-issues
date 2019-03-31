@@ -7,16 +7,13 @@ import Issue from "./Issue";
 import SearchContainer from './SearchContainer';
 
 
+
 const clientId = process.env.REACT_APP_CLIENT_ID;
 
 class App extends Component {
   constructor() {
     super();
-    const state = {};
-    this.state = {
-      selectedPage: 1,
-
-    };
+  
   
     this.handleSelected = this.handleSelected.bind(this);
   
@@ -43,24 +40,19 @@ class App extends Component {
     }    
   
 
-  this.state = {
-      issues: [],
-      token: state.token
-    };
-  
 }
 
 
  handleSearch(owner, repo) {
   //use for searchContainer,ex: update 'facebook/react' to state.value
   console.log(owner, repo)
-  this.setState({value: `${owner}/${repo}`}, () => this.getIssues(1))
+  this.setState({value: `${owner}/${repo}`}, () => this.getIssues(this.state.value, 1))
 }
 
-async getIssues(arg) {
+async getIssues(value, arg) {
   try{
     const url =
-    `https://api.github.com/repos/${this.state.value}/issues?page=${arg}&per_page=10`;
+    `https://api.github.com/repos/${value}/issues?page=${arg}&per_page=10&access_token=${this.state.token}`;
     let resp = await fetch(url);
     let json = await resp.json();
     json.message ? 
@@ -73,26 +65,9 @@ async getIssues(arg) {
 }
 
   async componentDidMount() {
-    const url =
-      "https://api.github.com/repos/AdeleD/react-paginate/issues?page=1&per_page=10"
-      console.log(this.state.issues)
-    let resp = await fetch(url);
-    let json = await resp.json();
-    this.setState({
-      issues: json
-    });   
+    this.getIssues('AdeleD/react-paginate', 1)  
   }
 
-// async getIsusses(arg){
-//   const url =
-//   `https://api.github.com/repos/AdeleD/react-paginate/issues?page=${arg}&per_page=10`
-//   console.log(this.state.issues)
-// let resp = await fetch(url);
-// let json = await resp.json();
-// this.setState({
-//   issues: json
-// });
-// }
 
 handleSelected(selectedPage) {
   console.log("selected", selectedPage);
