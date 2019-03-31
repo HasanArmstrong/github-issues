@@ -1,13 +1,24 @@
-.Issue--isOpen {
-  color: green;
+.Is {
+  background-color: none;
 }
 
-.Issue--isClosed {
-  color: red;
+.Is :hover {
+  background-color: #f6f8fa;
 }
 
-.Issue--body {
-  color: black;
-  margin-left: 10px;
-  opacity: 0.75;
+.openColor {
+  color: #88cd99;
+}
+
+.label {
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+  border-style: none;
+}
+
+.label:hover {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
 }
