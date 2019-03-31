@@ -99,7 +99,7 @@ class App extends Component {
   render() {
     console.log("state", this.state);
     return (
-      <div className="App ">
+      <div className="App container ">
         <div className="justify-content-center">
           <div className="d-flex justify-content-center">
             <PaginationComponent
@@ -114,6 +114,7 @@ class App extends Component {
             <SearchContainer
               handleSearch={(owner, repo) => this.handleSearch(owner, repo)}
             />
+            </div>
             {this.state.issues ? (
               <Issue issueList={this.state.issues} />
             ) : (
@@ -121,7 +122,7 @@ class App extends Component {
             )}
           </div>
         </div>
-      </div>
+ 
     );
   }
 }
