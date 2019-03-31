@@ -9,3 +9,16 @@
 .openColor {
   color: #88cd99;
 }
+
+.label {
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+  border-style: none;
+}
+
+.label:hover {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}

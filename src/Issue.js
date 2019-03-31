@@ -12,7 +12,7 @@ export default class Issue extends Component {
     return (
       <div>
         {this.props.issueList.map(issue => (
-          <div>
+          <div className="col Is">
             {/* <Navbar color="light" light expand="md" className="mx-4 mb-2">
               <NavbarBrand href="/">Open</NavbarBrand>
               <NavbarToggler onClick={this.toggle} />
@@ -40,14 +40,15 @@ export default class Issue extends Component {
                 </Nav>
               </Collapse>
             </Navbar> */}
-            <Media className="mx-2">
+
+            <Media className="mx-2 py-2">
               <Media className="col-1 openColor d-flex justify-content-end small pt-1">
                 <div className="mr-1">
                   <FontAwesomeIcon icon={faExclamationCircle} />
                 </div>
                 <div>{issue.state}</div>
               </Media>
-              <Media body className="Is mb-3">
+              <Media body className="mb-3">
                 <Media heading className="d-flex justify-content-start mb-0">
                   <div href="#">{issue.title}</div>
                 </Media>
@@ -67,25 +68,35 @@ export default class Issue extends Component {
                   className="row ml-2 text-left pl-1 mr-1"
                 />
               </Media>
-              <Media left className="col-2" href={issue.user.url}>
-                <img
-                  className="from-avatar"
-                  src={issue.user.avatar_url}
-                  width="60"
-                  height="60"
-                />
-                <p className="small text-dark">@{issue.user.login}</p>
+              <Media left className="col-2 my-2">
+                <p>
+                  <a href={issue.user.url}>
+                    <img
+                      className="from-avatar mt-4"
+                      src={issue.user.avatar_url}
+                      width="60"
+                      height="60"
+                    />
+                  </a>
+                </p>
+                <p>
+                  <a href={issue.user.url} className="small text-dark my-0">
+                    @{issue.user.login}
+                  </a>
+                </p>
                 {issue.labels.length === 0 ? (
                   <span />
                 ) : (
-                  <span
-                    className="label"
-                    style={{
-                      backgroundColor: "#" + issue.labels[0].color
-                    }}
-                  >
-                    {issue.labels[0].name}
-                  </span>
+                  <a className="label mt-0 mb-3" href={issue.labels[0].url}>
+                    <span
+                      className="p-1"
+                      style={{
+                        backgroundColor: "#" + issue.labels[0].color
+                      }}
+                    >
+                      {issue.labels[0].name}
+                    </span>
+                  </a>
                 )}
               </Media>
             </Media>
