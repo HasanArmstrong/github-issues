@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> 95e66825df3ec4603168961771236daedd4c712b
+>>>>>>> origin/luke/feature-content
 # CoderSchool FTW - Github Issues Page
 
 Created with love by: `lvltcode`, `HasanArmstrong`, `Kimtrinh`
@@ -147,4 +154,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/luke/feature-content
