@@ -12,7 +12,7 @@ const clientId = process.env.REACT_APP_CLIENT_ID;
 class App extends Component {
   constructor() {
     super();
-    const state = {};
+    
     this.state = {
       selectedPage: 1,
 
@@ -43,10 +43,6 @@ class App extends Component {
     }    
   
 
-  this.state = {
-      issues: [],
-      token: state.token
-    };
   
 }
 
@@ -60,7 +56,7 @@ class App extends Component {
 async getIssues(arg) {
   try{
     const url =
-    `https://api.github.com/repos/${this.state.value}/issues?page=${arg}&per_page=10`;
+    `https://api.github.com/repos/${this.state.value}/issues?page=${arg}&per_page=10&access_token=${this.state.token}`;
     let resp = await fetch(url);
     let json = await resp.json();
     json.message ? 
@@ -74,12 +70,13 @@ async getIssues(arg) {
 
   async componentDidMount() {
     const url =
-      "https://api.github.com/repos/AdeleD/react-paginate/issues?page=1&per_page=10"
+      `https://api.github.com/repos/AdeleD/react-paginate/issues?page=1&per_page=10&access_token=${this.state.token}`
       console.log(this.state.issues)
     let resp = await fetch(url);
     let json = await resp.json();
     this.setState({
-      issues: json
+      issues: json,
+      value : 'AdeleD/react-paginate'
     });   
   }
 
