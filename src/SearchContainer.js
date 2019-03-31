@@ -22,9 +22,9 @@ export default class SearchContainer extends React.Component {
     
     render() {
       return (
-    <form onSubmit={e => this.handleSubmit(e)} className="d-flex">
+    <form onSubmit={e => this.handleSubmit(e)} className="d-flex my-4">
     <input className="form-control" type="text" placeholder="owner/repo" onChange={e => this.handleChange(e)} />
-    <button className="btn btn-warning">Load</button>
+    <button className="btn btn-warning mx-2">Load</button>
     </form>
       )
     }

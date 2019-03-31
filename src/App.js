@@ -3,20 +3,19 @@ import "./App.css";
 import PaginationComponent from "react-reactstrap-pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Issue from "./Issue";
-import SearchContainer from './SearchContainer';
-import AddIssue from './AddIssue';
-
+import SearchContainer from "./SearchContainer";
+import AddIssue from "./AddIssue";
 
 const clientId = process.env.REACT_APP_CLIENT_ID;
 
 class App extends Component {
   constructor() {
     super();
-    
+
     this.state = {
-      selectedPage: 1,
-    }
-    
+      selectedPage: 1
+    };
+
     this.handleSelected = this.handleSelected.bind(this);
 
     const existingToken = sessionStorage.getItem("token");
@@ -48,9 +47,9 @@ class App extends Component {
 
   handleSearch(owner, repo) {
     //use for searchContainer,ex: update 'facebook/react' to state.value
-    console.log(owner, repo);
-    this.setState({ value: `${owner}/${repo}`, selectedPage: 1 }, () =>
-      this.getIssues(1)
+    this.setState(
+      { value: `${owner}/${repo}`, activePage: 1 },
+      () => this.handleSelected(1)
     );
   }
 
@@ -58,12 +57,14 @@ class App extends Component {
     try {
       const url = `https://api.github.com/repos/${
         this.state.value
-      }/issues?state=all&page=${arg}&per_page=10&access_token=${this.state.token}`;
+      }/issues?state=all&page=${arg}&per_page=10&access_token=${
+        this.state.token
+      }`;
       let resp = await fetch(url);
       let json = await resp.json();
       json.message
         ? this.setState({ issues: null, message: json.message })
-        : this.setState({ issues: json }, () => console.log(this.state));
+        : this.setState({ issues: json, totalItems: json[0].number }, () => console.log(this.state));
     } catch (err) {
       console.log(err);
     }
@@ -78,44 +79,60 @@ class App extends Component {
     let json = await resp.json();
     this.setState({
       issues: json,
-      value: "AdeleD/react-paginate"
+      value: "AdeleD/react-paginate",
+      totalItems : json[0].number
     });
   }
 
-  
   handleSelected(selectedPage) {
     //for the pagination
-    console.log("selected", selectedPage);
     this.setState({ selectedPage: selectedPage }, () =>
       this.getIssues(selectedPage)
     );
   }
 
-
   render() {
-    const {value, issues} = this.state
+    const { value, issues } = this.state;
     return (
       <div className="App container">
-      <div className="d-flex justify-content-center">
-       <PaginationComponent totalItems={10} pageSize={2} onSelect={this.handleSelected} />
-       </div>
-       <div className="d-flex justify-content-center">
-       <SearchContainer handleSearch={(owner, repo) => this.handleSearch(owner, repo)}/>
-       </div>
-       <div className="addIssue my-3 d-flex">
-        <h3><a href={'https://github.com/' + this.state.value} className="title mr-5"># {value ? this.state.value : 'AdeleD/react-paginate'}</a></h3>
-        {this.state.issues ?
-          <AddIssue onSubmit={() => this.getIssues(1)} AppState={this.state}/> :
-          <span />
-        }
-       
-       </div>
-       {this.state.issues ?
-        <Issue issueList={this.state.issues} /> :
-        <h2 className="m-5 text-center">{this.state.message}</h2>
-         }
-       </div>
-   
+        <div className="d-flex justify-content-center">
+          <SearchContainer
+            handleSearch={(owner, repo) => this.handleSearch(owner, repo)}
+          />
+        </div>
+        <div className="d-flex justify-content-center">
+          <PaginationComponent
+            totalItems={this.state.totalItems}
+            pageSize={10}
+            onSelect={this.handleSelected}
+            activePage={this.state.activePage}
+          />
+        </div>
+        <div className="addIssue my-3 d-flex">
+          <h3>
+            <a
+              href={"https://github.com/" + this.state.value}
+              className="title mr-5"
+            >
+              # {value ? this.state.value : "AdeleD/react-paginate"}
+            </a>
+          </h3>
+          {this.state.issues ? (
+            <AddIssue
+              onSubmit={() => this.getIssues(1)}
+              AppState={this.state}
+            />
+          ) : (
+            <span />
+          )}
+        </div>
+
+        {this.state.issues ? (
+          <Issue issueList={this.state.issues} />
+        ) : (
+          <h2 className="m-5 text-center">{this.state.message}</h2>
+        )}
+      </div>
     );
   }
 }
