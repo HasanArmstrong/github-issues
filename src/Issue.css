@@ -10,6 +10,10 @@
   color: #88cd99;
 }
 
+.closedColor {
+  color: red
+}
+
 .label {
   font-size: 12px;
   color: white;
@@ -22,3 +26,4 @@
   font-weight: bold;
   text-decoration: none;
 }
+

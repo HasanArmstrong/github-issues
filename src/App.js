@@ -58,7 +58,7 @@ class App extends Component {
     try {
       const url = `https://api.github.com/repos/${
         this.state.value
-      }/issues?page=${arg}&per_page=10&access_token=${this.state.token}`;
+      }/issues?state=all&page=${arg}&per_page=10&access_token=${this.state.token}`;
       let resp = await fetch(url);
       let json = await resp.json();
       json.message
@@ -70,7 +70,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const url = `https://api.github.com/repos/AdeleD/react-paginate/issues?page=1&per_page=10&access_token=${
+    const url = `https://api.github.com/repos/AdeleD/react-paginate/issues?state=all&page=1&per_page=10&access_token=${
       this.state.token
     }`;
     console.log(this.state.issues);
@@ -82,17 +82,7 @@ class App extends Component {
     });
   }
 
-  // async getIsusses(arg){
-  //   const url =
-  //   `https://api.github.com/repos/AdeleD/react-paginate/issues?page=${arg}&per_page=10`
-  //   console.log(this.state.issues)
-  // let resp = await fetch(url);
-  // let json = await resp.json();
-  // this.setState({
-  //   issues: json
-  // });
-  // }
-
+  
   handleSelected(selectedPage) {
     //for the pagination
     console.log("selected", selectedPage);
@@ -103,7 +93,6 @@ class App extends Component {
 
 
   render() {
-    console.log('state', this.state)
     const {value, issues} = this.state
     return (
       <div className="App container">
@@ -120,7 +109,7 @@ class App extends Component {
        {this.state.issues ?
 
         <Issue issueList={this.state.issues} /> :
-        <h2 className="m-5">{this.state.message}</h2>
+        <h2 className="m-5 text-center">{this.state.message}</h2>
          }
        </div>
    

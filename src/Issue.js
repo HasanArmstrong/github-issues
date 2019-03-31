@@ -28,40 +28,16 @@ export default class Issue extends React.Component {
       <div>
         {this.props.issueList.map(issue => (
           <div className="col Is">
-            {/* <Navbar color="light" light expand="md" className="mx-4 mb-2">
-              <NavbarBrand href="/">Open</NavbarBrand>
-              <NavbarToggler onClick={this.toggle} />
-              <Collapse navbar>
-                <Nav className="ml-auto" navbar>
-                  <NavItem>
-                    <NavLink href="/components/">Author</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="https://github.com/reactstrap/reactstrap">
-                      Projects
-                    </NavLink>
-                  </NavItem>
-                  <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret>
-                      Labels
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>st</DropdownItem>
-                      <DropdownItem>st2</DropdownItem>
-                      <DropdownItem divider />
-                      <DropdownItem>Reset</DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
-                </Nav>
-              </Collapse>
-            </Navbar> */}
 
             <Media className="mx-2 py-2">
-              <Media className="col-1 openColor d-flex justify-content-end small pt-1">
+              <Media className={(issue.state === 'open') ? 
+              'openColor col-1 d-flex justify-content-end small pt-1' 
+              : 'closedColor col-1 d-flex justify-content-end small pt-1' }  >
                 <div className="mr-1">
                   <FontAwesomeIcon icon={faExclamationCircle} />
+                  {' '} {issue.state}
                 </div>
-                <div>{issue.state}</div>
+                
               </Media>
               <Media body className="mb-3">
                 <Media heading className="d-flex justify-content-start mb-0">
