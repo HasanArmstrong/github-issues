@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 95e66825df3ec4603168961771236daedd4c712b
 # CoderSchool FTW - Github Issues Page
 
 Created with love by: `lvltcode`, `HasanArmstrong`, `Kimtrinh`
