@@ -102,12 +102,15 @@ class App extends Component {
        <div className="d-flex justify-content-center">
        <SearchContainer handleSearch={(owner, repo) => this.handleSearch(owner, repo)}/>
        </div>
-       <div className="addIssue my-3">
-        {/* <a href="#" className="title">{value ? this.state.value : 'AdeleD/react-paginate'}</a> */}
-        <AddIssue onSubmit={() => this.getIssues(1)} AppState={this.state}/>
+       <div className="addIssue my-3 d-flex">
+        <h3><a href={'https://github.com/' + this.state.value} className="title mr-5"># {value ? this.state.value : 'AdeleD/react-paginate'}</a></h3>
+        {this.state.issues ?
+          <AddIssue onSubmit={() => this.getIssues(1)} AppState={this.state}/> :
+          <span />
+        }
+       
        </div>
        {this.state.issues ?
-
         <Issue issueList={this.state.issues} /> :
         <h2 className="m-5 text-center">{this.state.message}</h2>
          }

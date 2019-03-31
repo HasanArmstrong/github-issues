@@ -76,7 +76,7 @@ this.toggle()
   render() {
     return (
       <div>
-        <Button color="danger" onClick={this.toggle}>
+        <Button color="primary" onClick={this.toggle}>
          New Issue
         </Button>
 
