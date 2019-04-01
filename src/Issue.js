@@ -3,7 +3,7 @@ import { Media } from "reactstrap";
 import "./Issue.css";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 const ReactMarkdown = require("react-markdown");
@@ -12,7 +12,8 @@ export default class Issue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      isLoading: true
     };
 
     this.toggle = this.toggle.bind(this);
@@ -24,13 +25,47 @@ export default class Issue extends React.Component {
     }));
   }
 
+  async componentDidMount () {
+    const url = `https://api.github.com/repos/AdeleD/react-paginate/issues/262/comments&access_token=${
+      this.state.token
+    }`;
+    
+    let resp = await fetch(url);
+    let json = await resp.json();
+    this.setState({
+      comments: json,
+      isLoading: false
+      
+    }, () => console.log('comment',this.state.comments));
+  }
+
   render() {
     return (
       <div>
         {this.props.issueList.map(issue => (
           <div className="col Is">
             <Media className="mx-2 py-2">
-              <Media
+            {issue.state === "open" ? (
+                <div>
+                  <Media className="d-flex justify-content-end small pt-1 text-success ml-5">
+                    <div className="mr-1">
+                      <FontAwesomeIcon icon={faExclamationCircle} />
+                    </div>
+
+                    <div>{issue.state}</div>
+                  </Media>
+                </div>
+              ) : (
+                <div>
+                  <Media className="d-flex justify-content-end small pt-1 text-danger ml-5">
+                    <div className="mr-1">
+                      <FontAwesomeIcon icon={faCheckCircle} />
+                    </div>
+                    <div>{issue.state}</div>
+                  </Media>
+                </div>
+              )}
+              {/* <Media
                 className={
                   issue.state === "open"
                     ? "openColor col-1 d-flex justify-content-end small pt-1"
@@ -38,9 +73,12 @@ export default class Issue extends React.Component {
                 }
               >
                 <div className="mr-1">
-                  <FontAwesomeIcon icon={faExclamationCircle} /> {issue.state}
+               {issue.state === 'open' ? <FontAwesomeIcon icon={ faExclamationCircle } /> :
+               <FontAwesomeIcon icon={ faCheckCircle } />
+                }
+                   {issue.state}
                 </div>
-              </Media>
+              </Media> */}
               <Media body className="mb-3">
                 <Media heading className="d-flex justify-content-start mb-0">
                   <div href="#" onClick={this.toggle}>
@@ -55,7 +93,12 @@ export default class Issue extends React.Component {
                       {issue.title}
                     </ModalHeader>
                     <ModalBody>{issue.body}</ModalBody>
-                    
+                    <div className="comments">
+                    {this.state.isLoading ? <span /> : this.state.comments.map(
+                      comment => <div>{comment.user.login} <hr/>
+                      {comment.body}</div>
+                    )}
+                      </div>
                     <ModalFooter>
                       <Button color="secondary" onClick={this.toggle}>
                         Close
