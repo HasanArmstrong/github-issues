@@ -55,6 +55,7 @@ export default class Issue extends React.Component {
                       {issue.title}
                     </ModalHeader>
                     <ModalBody>{issue.body}</ModalBody>
+                    
                     <ModalFooter>
                       <Button color="secondary" onClick={this.toggle}>
                         Close
