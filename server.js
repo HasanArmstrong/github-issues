@@ -23,7 +23,7 @@ http.createServer((req, res) => {
       }
     }, (err, r, body) => {
       res.writeHead(301, {
-        'Location': 'https://friendly-morse-b87fc8.netlify.com?' + body
+        'Location': 'http://localhost:3000?' + body
       });
       res.end();
     })
