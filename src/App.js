@@ -12,7 +12,6 @@ class App extends Component {
   constructor() {
     super();
 
-
     const existingToken = sessionStorage.getItem("token");
     const accessToken =
       window.location.search.split("=")[0] === "?access_token"
@@ -86,7 +85,7 @@ class App extends Component {
   handleSelected(selectedPage) {
     //for the pagination
     this.setState({ selectedPage: selectedPage }, () =>
-      this.getIssues(selectedPage, this.state.totalItems)
+    this.getIssues(selectedPage, this.state.totalItems)
     );
   }
 
